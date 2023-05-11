@@ -13,7 +13,10 @@ def count_calls(method: Callable) -> Callable:
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        """Wrapped function to use method's name as the key for counting its call"""
+        """
+        Wrapped function to use method's name as the key
+        for counting its call
+        """
         self._redis.incr(key)
         return method(self, *args, **kwargs)
 
@@ -21,7 +24,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 def call_history(method: Callable) -> Callable:
-    """ 
+    """
     Decorator stores the history of inputs and
     outputs for a particular function.
     """
@@ -39,6 +42,7 @@ def call_history(method: Callable) -> Callable:
 
     return wrapper
 
+
 def replay(method: Callable):
     """
     Displays the history of calls of a particular
@@ -55,6 +59,7 @@ def replay(method: Callable):
     for key, val in list(zip(input_list, output_list)):
         attr, val = key.decode('utf-8'), val.decode('utf-8')
         print(f'{method_key}(*{attr}) -> {val}')
+
 
 class Cache:
     """connects to redis"""
