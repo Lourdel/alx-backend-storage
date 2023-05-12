@@ -17,3 +17,12 @@ def nginxStatsCount():
     methods_list = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for method in methods_list:
         method_count = nginx_collection.count_documents({"method": method})
+        print(f"\tmethod {method}: {method_count}")
+
+    stat_check = nginx_collection.count_documents(
+        {"method": "GET", "path": "/status"})
+    print(f"{stat_check} status check")
+
+
+if __name__ == "__main__":
+    nginxStatsCount()
